@@ -1,5 +1,7 @@
 package com.hania.view;
 
+import com.hania.model.Game;
+
 import javax.swing.*;
 
 /**
@@ -15,6 +17,7 @@ public class MainFrame extends JFrame {
     private JButton resetButton;
     private JSpinner intelligenceSpinner;
     private JPanel boardPanel;
+    private JButton[] grid;
 
     public MainFrame() {
         super("Tic Tac Toe");
@@ -26,8 +29,16 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    public void repaintBoard() {
-
+    public void repaintBoard(Game game) {
+        int size = game.getGrid();
+//        IntStream.range(0, size).forEach(i -> {
+//            grid[i].setText(String.valueOf(game.getBoard()[i][i]));
+//            boardPanel.add(grid[i]);
+//        });
+//        Arrays.stream(grid)
+//                .forEach(button ->
+//                    boardPanel.add(button)
+//                );
     }
 
     private void setDefaultSpinnerValues() {
@@ -49,5 +60,10 @@ public class MainFrame extends JFrame {
 
     public JPanel getBoardPanel() {
         return boardPanel;
+    }
+
+    public void createGrid(int size) {
+        grid = new JButton[size];
+
     }
 }
