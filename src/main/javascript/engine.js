@@ -13,6 +13,12 @@ var board = [];
 var undef;
 var size = 100;
 
+/**
+ * Initializes game for specified grid and opponent's intelligence.
+ *
+ * @param _grid: board length and width
+ * @param _intelligence: minimax recursion depth
+ */
 function startGame(_grid, _intelligence) {
     grid = _grid;
     intelligence = _intelligence;
@@ -30,7 +36,7 @@ function startGame(_grid, _intelligence) {
 }
 
 /**
- * @param move last player (-1) move
+ * @param move: last player (-1) move
  */
 function makeMove(move) {
     var next;
@@ -93,7 +99,7 @@ function checkIfWon(depth) {
  * http://en.wikipedia.org/wiki/Negamax
  * http://en.wikipedia.org/wiki/Alpha-beta_pruning
  *
- * @param depth opponent's intelligence
+ * @param depth: opponent's intelligence
  * @returns {*}
  */
 function search(depth, player, alpha, beta) {
@@ -135,5 +141,5 @@ function search(depth, player, alpha, beta) {
             }
         }
     }
-    return depth ? max || 0 : next; // 0 is tie game
+    return depth ? max || 0 : next;  // 0 is a tie
 }

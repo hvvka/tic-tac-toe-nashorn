@@ -75,9 +75,5 @@ public class Game {
     private void updateBoard() throws ScriptException, NoSuchMethodException {
         Object output = invocable.invokeFunction("getBoard");
         board = (int[]) output;
-
-        for (int i = 0; i < grid * grid; ++i)
-            System.out.println(board[i]);
-
     }
 }
