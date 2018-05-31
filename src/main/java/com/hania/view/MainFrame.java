@@ -1,8 +1,10 @@
 package com.hania.view;
 
-import com.hania.model.Game;
+import com.hania.Game;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.stream.IntStream;
 
 /**
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
@@ -30,15 +32,17 @@ public class MainFrame extends JFrame {
     }
 
     public void repaintBoard(Game game) {
+        boardPanel.removeAll();
         int size = game.getGrid();
-//        IntStream.range(0, size).forEach(i -> {
-//            grid[i].setText(String.valueOf(game.getBoard()[i][i]));
-//            boardPanel.add(grid[i]);
-//        });
-//        Arrays.stream(grid)
-//                .forEach(button ->
-//                    boardPanel.add(button)
-//                );
+        IntStream.range(0, size * size)
+                .forEach(i -> {
+                    String character = "";
+                    if (game.getBoard()[i] != 0)
+                        character = game.getBoard()[i] == 1 ? "O" : "X";
+                    grid[i].setText(character);
+                    boardPanel.add(grid[i]);
+                });
+        boardPanel.repaint();
     }
 
     private void setDefaultSpinnerValues() {
@@ -62,8 +66,18 @@ public class MainFrame extends JFrame {
         return boardPanel;
     }
 
-    public void createGrid(int size) {
-        grid = new JButton[size];
+    public JButton[] getGrid() {
+        return grid;
+    }
 
+    public void createGrid(int size) {
+        boardPanel.removeAll();
+        boardPanel.setLayout(new GridLayout(size, size));
+        grid = new JButton[size * size];
+        for (int i = 0; i < size * size; ++i) {
+            grid[i] = new JButton();
+            boardPanel.add(grid[i]);
+        }
+        boardPanel.revalidate();
     }
 }

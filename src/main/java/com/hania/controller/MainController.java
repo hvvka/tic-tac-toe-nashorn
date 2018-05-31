@@ -1,7 +1,8 @@
 package com.hania.controller;
 
-import com.hania.model.Game;
+import com.hania.Game;
 import com.hania.view.MainFrame;
+import com.hania.view.WindowMessages;
 
 import javax.swing.*;
 import java.util.stream.IntStream;
@@ -30,6 +31,7 @@ public class MainController {
         resetButton = mainFrame.getResetButton();
         intelligenceSpinner = mainFrame.getIntelligenceSpinner();
         boardPanel = mainFrame.getBoardPanel();
+        grid = mainFrame.getGrid();
     }
 
     private void initListeners() {
@@ -37,9 +39,21 @@ public class MainController {
             int size = Integer.parseInt(String.valueOf(gridSpinner.getValue()));
             int intelligence = Integer.parseInt(String.valueOf(intelligenceSpinner.getValue()));
             game = new Game(size, intelligence);
+            mainFrame.createGrid(size);
+            grid = mainFrame.getGrid();
+            initGrid();
         });
+    }
 
+    private void initGrid() {
         IntStream.range(0, game.getGrid() * game.getGrid())
-                .forEach(i -> grid[i].addActionListener(e -> game.makeMove(i)));
+                .forEach(i -> grid[i].addActionListener(e -> {
+                            String result = game.makeMove(i);
+                            mainFrame.repaintBoard(game);
+                            if (!result.equals("")) {
+                                WindowMessages.showResult(result);
+                            }
+                        })
+                );
     }
 }

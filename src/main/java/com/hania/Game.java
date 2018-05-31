@@ -1,4 +1,4 @@
-package com.hania.model;
+package com.hania;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +16,7 @@ import java.io.FileReader;
 public class Game {
 
     private static final Logger LOG = LoggerFactory.getLogger(Game.class);
-
-    private static final int NOUGHT = -1;   // player
     private static final int EMPTY = 0;
-    private static final int CROSS = 1;     // computer
 
     private int[] board;
     private int grid;
@@ -59,16 +56,28 @@ public class Game {
         return grid;
     }
 
-    public void makeMove(int move) {
+    public String makeMove(int move) {
         Object output = null;
         try {
             output = invocable.invokeFunction("makeMove", move);
+            updateBoard();
         } catch (ScriptException | NoSuchMethodException e) {
             LOG.error("", e);
         }
 
         if (output instanceof String) {
-
+            return output.toString();
         }
+
+        return "";
+    }
+
+    private void updateBoard() throws ScriptException, NoSuchMethodException {
+        Object output = invocable.invokeFunction("getBoard");
+        board = (int[]) output;
+
+        for (int i = 0; i < grid * grid; ++i)
+            System.out.println(board[i]);
+
     }
 }

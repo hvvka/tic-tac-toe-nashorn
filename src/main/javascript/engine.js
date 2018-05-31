@@ -5,13 +5,13 @@
  * Opponent: x = 1
  */
 
-let grid;
-let intelligence;
+var grid;
+var intelligence;
 
-let combos = [];
-let board = [];
-let undef;
-let size = 100;
+var combos = [];
+var board = [];
+var undef;
+var size = 100;
 
 function startGame(_grid, _intelligence) {
     grid = _grid;
@@ -33,9 +33,9 @@ function startGame(_grid, _intelligence) {
  * @param move last player (-1) move
  */
 function makeMove(move) {
-    let next;
+    var next;
     if (!board[move]) {
-        draw(move, -1); // o = -1, x = 1
+        draw(move, -1);  // o = -1, x = 1
         if (checkIfWon(0) < 0) {
             return "won";
         }
@@ -50,11 +50,16 @@ function makeMove(move) {
             return "lost";
         }
     }
-    return board;
+
+    // return Java.to(board, "int[]");
 }
 
 function draw(i, o) {
     board[i] = o || 1;
+}
+
+function getBoard() {
+    return Java.to(board, "int[]");
 }
 
 /**
@@ -63,8 +68,8 @@ function draw(i, o) {
  * @returns {number} winner if combo is present
  */
 function checkIfWon(depth) {
-    let j, x, o, k;
-    for (let z in combos) {
+    var j, x, o, k;
+    for (var z in combos) {
         j = x = o = grid;
         while (j--) {
             k = combos[z][j];
@@ -92,9 +97,9 @@ function checkIfWon(depth) {
  * @returns {*}
  */
 function search(depth, player, alpha, beta) {
-    let i = grid * grid;
-    let min = -size;
-    let max, value, next;
+    var i = grid * grid;
+    var min = -size;
+    var max, value, next;
 
     // either player won
     if (value = checkIfWon(depth)) {
