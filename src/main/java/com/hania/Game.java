@@ -7,8 +7,7 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 
 /**
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
@@ -33,10 +32,10 @@ public class Game {
     private void initJavaScriptEngine() {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
         try {
-            engine.eval(new FileReader("src/main/javascript/engine.js"));
+            engine.eval(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("engine.js")));
             invocable = (Invocable) engine;
             invocable.invokeFunction("startGame", grid, intelligence);
-        } catch (ScriptException | FileNotFoundException | NoSuchMethodException e) {
+        } catch (ScriptException | NoSuchMethodException e) {
             LOG.error("", e);
         }
     }
